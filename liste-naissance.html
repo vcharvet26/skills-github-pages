@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Liste de Naissance - Suggestions Cadeaux</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #E8C4A8;
+            --secondary: #F5E6D8;
+            --accent: #C9A690;
+            --text-dark: #3D3D3D;
+            --text-light: #666;
+            --white: #FEFEFE;
+            --shadow: rgba(0, 0, 0, 0.08);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background: linear-gradient(135deg, var(--secondary) 0%, var(--white) 100%);
+            color: var(--text-dark);
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        /* Header */
+        header {
+            text-align: center;
+            padding: 60px 20px 40px;
+            background: var(--white);
+            border-radius: 0 0 30px 30px;
+            box-shadow: 0 10px 30px var(--shadow);
+            margin-bottom: 50px;
+            animation: fadeInDown 0.8s ease-out;
+        }
+
+        h1 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 3.5rem;
+            font-weight: 600;
+            color: var(--accent);
+            margin-bottom: 10px;
+            letter-spacing: 1px;
+        }
+
+        .subtitle {
+            font-size: 1.1rem;
+            color: var(--text-light);
+            font-weight: 300;
+        }
+
+        /* Filters */
+        .filters {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 50px;
+            flex-wrap: wrap;
+            animation: fadeIn 1s ease-out 0.3s backwards;
+        }
+
+        .filter-btn {
+            padding: 12px 28px;
+            background: var(--white);
+            border: 2px solid var(--primary);
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 400;
+            color: var(--text-dark);
+            font-size: 0.95rem;
+        }
+
+        .filter-btn:hover, .filter-btn.active {
+            background: var(--primary);
+            color: var(--white);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px var(--shadow);
+        }
+
+        /* Grid */
+        .gifts-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 30px;
+            margin-bottom: 60px;
+        }
+
+        /* Gift Card */
+        .gift-card {
+            background: var(--white);
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 5px 20px var(--shadow);
+            transition: all 0.4s ease;
+            animation: fadeInUp 0.6s ease-out backwards;
+        }
+
+        .gift-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+        }
+
+        .gift-image {
+            width: 100%;
+            height: 120px;
+            object-fit: cover;
+            background: var(--secondary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.5rem;
+            color: var(--accent);
+        }
+
+        .gift-content {
+            padding: 25px;
+        }
+
+        .gift-category {
+            display: inline-block;
+            padding: 5px 15px;
+            background: var(--secondary);
+            color: var(--accent);
+            border-radius: 15px;
+            font-size: 0.8rem;
+            margin-bottom: 12px;
+            font-weight: 500;
+        }
+
+        .gift-title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.6rem;
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: var(--text-dark);
+        }
+
+        .gift-description {
+            color: var(--text-light);
+            font-size: 0.95rem;
+            margin-bottom: 15px;
+            line-height: 1.5;
+        }
+
+        .gift-price {
+            font-size: 1.3rem;
+            font-weight: 500;
+            color: var(--accent);
+            margin-bottom: 15px;
+        }
+
+        .shop-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 12px 24px;
+            background: var(--primary);
+            color: var(--white);
+            text-decoration: none;
+            border-radius: 25px;
+            transition: all 0.3s ease;
+            font-weight: 500;
+            font-size: 0.95rem;
+        }
+
+        .shop-link:hover {
+            background: var(--accent);
+            transform: scale(1.05);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 40px 20px;
+            color: var(--text-light);
+            font-size: 0.9rem;
+        }
+
+        /* Animations */
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2.5rem;
+            }
+
+            .gifts-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+
+            .filter-btn {
+                padding: 10px 20px;
+                font-size: 0.9rem;
+            }
+        }
+
+        /* Hidden class for filtering */
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>✨ Notre Liste de Naissance ✨</h1>
+        <p class="subtitle">Découvrez nos suggestions pour accueillir bébé</p>
+    </header>
+
+    <div class="container">
+        <div class="filters">
+            <button class="filter-btn active" data-category="tous">Tous les cadeaux</button>
+            <button class="filter-btn" data-category="vetements">Vêtements</button>
+            <button class="filter-btn" data-category="puériculture">Puériculture</button>
+            <button class="filter-btn" data-category="eveil">Éveil & Jouets</button>
+            <button class="filter-btn" data-category="chambre">Chambre</button>
+        </div>
+
+        <div class="gifts-grid" id="giftsGrid">
+            <!-- Les cadeaux seront générés ici par JavaScript -->
+        </div>
+    </div>
+
+    <footer>
+        <p>Merci de partager ce moment spécial avec nous ! 💕</p>
+    </footer>
+
+    <script>
+        // Base de données des cadeaux avec liens vers boutiques suisses
+        const gifts = [
+            {
+                category: 'vetements',
+                title: 'Body en coton bio',
+                description: 'Lot de 5 bodies doux et confortables pour bébé, 100% coton bio.',
+                price: 'CHF 45.-',
+                icon: '👶',
+                shopName: 'Manor',
+                shopUrl: 'https://www.manor.ch/fr/baby'
+            },
+            {
+                category: 'vetements',
+                title: 'Pyjama velours',
+                description: 'Pyjama tout doux en velours avec pieds, parfait pour l\'hiver.',
+                price: 'CHF 35.-',
+                icon: '🌙',
+                shopName: 'Chicco',
+                shopUrl: 'https://www.chicco.ch/fr/'
+            },
+            {
+                category: 'puériculture',
+                title: 'Écharpe de portage',
+                description: 'Écharpe de portage ergonomique pour garder bébé tout contre soi.',
+                price: 'CHF 95.-',
+                icon: '🤱',
+                shopName: 'Baby Rose',
+                shopUrl: 'https://www.babyrose.ch/'
+            },
+            {
+                category: 'puériculture',
+                title: 'Siège auto groupe 0+',
+                description: 'Siège auto homologué et sécurisé pour les premiers déplacements.',
+                price: 'CHF 250.-',
+                icon: '🚗',
+                shopName: 'Baby-Markt',
+                shopUrl: 'https://www.baby-markt.ch/fr/'
+            },
+            {
+                category: 'puériculture',
+                title: 'Poussette tout-terrain',
+                description: 'Poussette légère et maniable, idéale pour les balades en ville et nature.',
+                price: 'CHF 450.-',
+                icon: '🚼',
+                shopName: 'Vertbaudet',
+                shopUrl: 'https://www.vertbaudet.ch/fr/'
+            },
+            {
+                category: 'eveil',
+                title: 'Tapis d\'éveil musical',
+                description: 'Tapis coloré avec arches et jouets suspendus pour stimuler bébé.',
+                price: 'CHF 85.-',
+                icon: '🎵',
+                shopName: 'Franz Carl Weber',
+                shopUrl: 'https://www.fcw.ch/'
+            },
+            {
+                category: 'eveil',
+                title: 'Hochet en bois',
+                description: 'Hochet en bois naturel, fabriqué en Suisse, sans produits chimiques.',
+                price: 'CHF 25.-',
+                icon: '🪵',
+                shopName: 'Brack',
+                shopUrl: 'https://www.brack.ch/'
+            },
+            {
+                category: 'eveil',
+                title: 'Livre en tissu',
+                description: 'Livre interactif en tissu avec différentes textures et couleurs.',
+                price: 'CHF 20.-',
+                icon: '📖',
+                shopName: 'Manor',
+                shopUrl: 'https://www.manor.ch/fr/baby'
+            },
+            {
+                category: 'chambre',
+                title: 'Veilleuse musicale',
+                description: 'Veilleuse douce avec projection d\'étoiles et berceuses apaisantes.',
+                price: 'CHF 55.-',
+                icon: '⭐',
+                shopName: 'Galaxus',
+                shopUrl: 'https://www.galaxus.ch/'
+            },
+            {
+                category: 'chambre',
+                title: 'Tour de lit respirant',
+                description: 'Protection douce et sécurisée pour le lit de bébé.',
+                price: 'CHF 65.-',
+                icon: '🛏️',
+                shopName: 'IKEA',
+                shopUrl: 'https://www.ikea.com/ch/fr/cat/produits-pour-bebe-bc001/'
+            },
+            {
+                category: 'chambre',
+                title: 'Mobile musical',
+                description: 'Mobile avec mélodies douces et personnages colorés pour l\'éveil.',
+                price: 'CHF 45.-',
+                icon: '🎠',
+                shopName: 'Baby Rose',
+                shopUrl: 'https://www.babyrose.ch/'
+            },
+            {
+                category: 'puériculture',
+                title: 'Babyphone vidéo',
+                description: 'Babyphone avec écran HD et vision nocturne pour veiller sur bébé.',
+                price: 'CHF 120.-',
+                icon: '📹',
+                shopName: 'Digitec',
+                shopUrl: 'https://www.digitec.ch/'
+            }
+        ];
+
+        // Fonction pour créer une carte cadeau
+        function createGiftCard(gift, index) {
+            return `
+                <div class="gift-card" data-category="${gift.category}" style="animation-delay: ${index * 0.1}s">
+                    <div class="gift-image">${gift.icon}</div>
+                    <div class="gift-content">
+                        <span class="gift-category">${gift.category}</span>
+                        <h3 class="gift-title">${gift.title}</h3>
+                        <p class="gift-description">${gift.description}</p>
+                        <div class="gift-price">${gift.price}</div>
+                        <a href="${gift.shopUrl}" target="_blank" class="shop-link">
+                            Commander chez ${gift.shopName} →
+                        </a>
+                    </div>
+                </div>
+            `;
+        }
+
+        // Afficher tous les cadeaux au chargement
+        const giftsGrid = document.getElementById('giftsGrid');
+        giftsGrid.innerHTML = gifts.map((gift, index) => createGiftCard(gift, index)).join('');
+
+        // Gestion des filtres
+        const filterButtons = document.querySelectorAll('.filter-btn');
+        filterButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                // Retirer la classe active de tous les boutons
+                filterButtons.forEach(btn => btn.classList.remove('active'));
+                // Ajouter la classe active au bouton cliqué
+                button.classList.add('active');
+
+                const category = button.dataset.category;
+                const allCards = document.querySelectorAll('.gift-card');
+
+                allCards.forEach(card => {
+                    if (category === 'tous' || card.dataset.category === category) {
+                        card.classList.remove('hidden');
+                    } else {
+                        card.classList.add('hidden');
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
